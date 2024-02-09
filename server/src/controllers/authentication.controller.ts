@@ -2,8 +2,9 @@ import AuthenticationService from '../services/authentication.service';
 import { ResponseInterface } from '../interfaces/response.interface';
 import { NextFunction, Request, Response } from 'express';
 import { COOKIE_DURATION_MINUTE, COOKIE_NAME_AUTH } from '../config';
+
 export default class AuthController {
-  private authService: AuthenticationService = new AuthenticationService(); // Should this be a new instance?
+  private authService: AuthenticationService = new AuthenticationService();
 
   public login = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
@@ -18,7 +19,7 @@ export default class AuthController {
         res.status(serviceResponse.code).json(serviceResponse);
       } else {
         // Authentication succeeced!
-        this.setCookie(res, serviceResponse.data['id']);
+        this.setHttpCookie(res, serviceResponse.data['id']);
         res.status(serviceResponse.code).json(serviceResponse);
       }
     } catch (error) {
@@ -39,7 +40,7 @@ export default class AuthController {
 
   // HttpOnly cookie will be set to protect the api routes when the cookie has expired or does not exist.
   // This is strictly server side protection.
-  private setCookie(res: Response, value: string): void {
+  private setHttpCookie(res: Response, value: string): void {
     // Set a HttpOnly cookie containing the user id value.
     res.cookie(`${COOKIE_NAME_AUTH}`, value, {
       // Https only (but it should allow localhost too!)

@@ -6,6 +6,26 @@ import { scrypt, randomBytes } from 'crypto';
 export default class UserController {
   private userService: UserService = new UserService();
 
+  public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const serviceResponse = await this.userService.getUsers();
+      res.status(serviceResponse.code).json(serviceResponse);
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorResponse: ResponseInterface = {
+          data: null,
+          error: true,
+          message: error.message,
+          code: 400,
+        };
+        res.status(errorResponse.code).json(errorResponse);
+      } else {
+        // Let Express handle the error for now:
+        next(error);
+      }
+    }
+  };
+
   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const { password, username } = req.body;
