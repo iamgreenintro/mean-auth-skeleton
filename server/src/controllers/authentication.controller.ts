@@ -1,7 +1,7 @@
 import AuthenticationService from '../services/authentication.service';
 import { ResponseInterface } from '../interfaces/response.interface';
 import { NextFunction, Request, Response } from 'express';
-import { COOKIE_DURATION_MINUTE } from '../config';
+import { COOKIE_DURATION_MINUTE, COOKIE_NAME_AUTH } from '../config';
 export default class AuthController {
   private authService: AuthenticationService = new AuthenticationService(); // Should this be a new instance?
 
@@ -41,7 +41,7 @@ export default class AuthController {
   // This is strictly server side protection.
   private setCookie(res: Response, value: string): void {
     // Set a HttpOnly cookie containing the user id value.
-    res.cookie('authid', value, {
+    res.cookie(`${COOKIE_NAME_AUTH}`, value, {
       // Https only (but it should allow localhost too!)
       secure: true,
       // Important: must be httpOnly for security reasons!
