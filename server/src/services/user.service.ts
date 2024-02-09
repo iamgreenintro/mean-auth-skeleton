@@ -2,13 +2,6 @@ import { ResponseInterface } from '../interfaces/response.interface';
 import UserModel from './../models/user.model';
 
 export default class UserService {
-  private userModel = new UserModel();
-
-  // public async getAllUsers(): Promise<ResponseInterface> {
-  //   const users = await UserModel.find();
-  //   return users;
-  // }
-
   public async createUser(payload: any): Promise<ResponseInterface> {
     try {
       const createdUser = await UserModel.create(payload);
