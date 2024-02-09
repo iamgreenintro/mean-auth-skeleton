@@ -8,54 +8,41 @@ export default class UserController {
 
   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const { password } = req.body;
+      const { password, username } = req.body;
+      if (!password || !username) {
+        // Will throw an error if we are missing the username or password required to continue the request.
+        throw new Error('Username and password are required!');
+      }
+
+      if (password.length < 6 || username.length < 6) {
+        // Will throw an error if the username or password are too short.
+        throw new Error('Username and password must be at least 6 characters each.');
+      }
 
       // https://nodejs.org/docs/latest-v20.x/api/crypto.html#cryptoscryptpassword-salt-keylen-options-callback
       // https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-132.pdf
-      // SALT MUST BE UNIQUE AND STORED IN THE DB ALONGSIDE THE USER
       const salt = randomBytes(32).toString('hex');
       scrypt(password, salt, 32, async (err, derivedKey) => {
         const userToCreate = {
           password: derivedKey.toString('hex'),
-          username: req.body['username'],
+          username: username,
           salt: salt,
         };
 
-        const createdUser = await this.userService.createUser(userToCreate);
-
-        if (!createdUser) {
-          const response: ResponseInterface = {
-            data: null,
-            error: true,
-            message: 'Could not create a user with the passed body data.',
-            code: 422, // or 409?
-          };
-          res.status(response.code).json(response);
-        }
-
-        if (createdUser?.errors) {
-          const response: ResponseInterface = {
-            data: null,
-            error: true,
-            message: 'An error occured during validating the input.',
-            code: 422,
-          };
-          res.status(response.code).json(response);
-        }
-
-        const response: ResponseInterface = {
-          data: createdUser,
-          error: false,
-          message: 'Created a new user.',
-          code: 200,
-        };
-        res.status(200).json(response);
+        const serviceResponse = await this.userService.createUser(userToCreate);
+        res.status(serviceResponse.code).json(serviceResponse);
       });
     } catch (error) {
-      // Let Express handle the error for now:
       if (error instanceof Error) {
-        next(`\x1b[41m[${error.name}]\x1b[0m:\t${error.message}`);
+        const errorResponse: ResponseInterface = {
+          data: null,
+          error: true,
+          message: error.message,
+          code: 400,
+        };
+        res.status(errorResponse.code).json(errorResponse);
       } else {
+        // Let Express handle the error for now:
         next(error);
       }
     }

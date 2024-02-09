@@ -1,23 +1,43 @@
+import { ResponseInterface } from '../interfaces/response.interface';
 import UserModel from './../models/user.model';
 
 export default class UserService {
   private userModel = new UserModel();
 
-  public async getAllUsers(): Promise<any> {
-    const users = await UserModel.find();
-    return users;
-  }
+  // public async getAllUsers(): Promise<ResponseInterface> {
+  //   const users = await UserModel.find();
+  //   return users;
+  // }
 
-  public async createUser(payload: any): Promise<any> {
+  public async createUser(payload: any): Promise<ResponseInterface> {
     try {
       const createdUser = await UserModel.create(payload);
-      return createdUser;
+      console.log(createdUser);
+      const response: ResponseInterface = {
+        data: createdUser,
+        message: '',
+        error: false,
+        code: 200,
+      };
+      return response;
     } catch (err: any) {
       if (err.code === 11000) {
         // Duplicate key encountered, user most likely exists already.
-        return null;
+        const response: ResponseInterface = {
+          data: null,
+          message: 'Username already exists.',
+          error: true,
+          code: 409,
+        };
+        return response;
       }
-      return err;
+      const response: ResponseInterface = {
+        data: null,
+        message: 'Error occured while attempting to create a new user.',
+        error: true,
+        code: 400,
+      };
+      return response;
     }
   }
 }
