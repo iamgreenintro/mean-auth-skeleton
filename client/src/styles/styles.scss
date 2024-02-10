@@ -1,0 +1,58 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Material theming and variable overwriting:
+@import "./theme/palette";
+
+/* You can add global styles to this file, and also import other style files */
+
+/* IMPORTS: */
+
+/* GLOBAL STYLING: */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: #dddddd;
+}
+
+app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 5px 0 15px 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+mat-form-field.mat-mdc-form-field {
+  width: 100%;
+}

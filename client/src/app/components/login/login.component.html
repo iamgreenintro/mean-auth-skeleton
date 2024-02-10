@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <p class="title text-center">Login</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label for="username">Username</mat-label>
+        <input
+          id="username"
+          type="text"
+          matInput
+          placeholder="username"
+          [(ngModel)]="username"
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label for="password">Password</mat-label>
+        <input
+          id="password"
+          matInput
+          [(ngModel)]="password"
+          placeholder="password"
+          [type]="isPasswordHidden ? 'password' : 'text'"
+        />
+        <mat-icon matSuffix (click)="isPasswordHidden = !isPasswordHidden">{{
+          isPasswordHidden ? "lock" : "lock_open"
+        }}</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <button mat-flat-button color="primary" (click)="login()">Login</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <p class="text-center">
+        Don't have an account? <a routerLink="/register">Register here</a>
+      </p>
+    </div>
+  </div>
+</div>

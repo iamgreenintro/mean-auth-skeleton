@@ -1,0 +1,96 @@
+// Sass colour maps for Material:
+$green-palette: (
+  50: #e0f3ef,
+  100: #b2e0d7,
+  200: #81cdbd,
+  300: #4eb8a3,
+  400: #28a990,
+  500: #00997e,
+  600: #008c71,
+  700: #007c62,
+  800: #006c54,
+  900: #005039,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$blue-palette: (
+  50: #e1f4f7,
+  100: #b3e2ed,
+  200: #85cfe1,
+  300: #5cbcd6,
+  400: #41afd1,
+  500: #2ba1cb,
+  600: #2394be,
+  700: #1982ac,
+  800: #177199,
+  900: #0d5278,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$red-palette: (
+  50: #fae8ec,
+  100: #f3c7ce,
+  200: #dc8f95,
+  300: #cc656d,
+  400: #d3414d,
+  500: #d52a35,
+  600: #c72133,
+  700: #b5172d,
+  800: #a80f26,
+  900: #99001c,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: white,
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  ),
+);
+
+$my-primary: mat.define-palette($green-palette, 700);
+$my-accent: mat.define-palette($blue-palette, 600);
+$my-warn: mat.define-palette($red-palette, 500);
+
+$my-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+@include mat.core-theme($my-theme);
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component.
+@include mat.all-component-themes($my-theme);
