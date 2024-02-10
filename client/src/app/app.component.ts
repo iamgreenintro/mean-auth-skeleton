@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,9 +15,9 @@ import { ResponseInterface } from './interfaces/response.interface';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  @HostBinding('class.login-register') rootClass: boolean = false;
   title = 'client';
   user: any;
-
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
@@ -27,6 +27,7 @@ export class AppComponent {
       if (event instanceof NavigationStart) {
         console.log(event);
         this.validateSession(event.url);
+        this.rootClass = this.setRootClass(event.url);
       }
     });
   }
@@ -49,4 +50,11 @@ export class AppComponent {
     this.router.navigate([routeTarget]);
     return result;
   };
+
+  private setRootClass(routeTarget: string): boolean {
+    if (routeTarget === '/login' || routeTarget === '/register') {
+      return true;
+    }
+    return false;
+  }
 }
