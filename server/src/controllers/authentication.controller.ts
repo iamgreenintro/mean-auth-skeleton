@@ -19,6 +19,7 @@ export default class AuthController {
         res.status(serviceResponse.code).json(serviceResponse);
       } else {
         // Authentication succeeced!
+        // Set a httpOnly cookie with the extracted userID as the cookie value.
         this.setHttpCookie(res, serviceResponse.data['id']);
         res.status(serviceResponse.code).json(serviceResponse);
       }
@@ -54,6 +55,33 @@ export default class AuthController {
       });
 
       res.status(200).json(null);
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorResponse: ResponseInterface = {
+          data: null,
+          error: true,
+          message: error.message,
+          code: 400,
+        };
+        res.status(errorResponse.code).json(errorResponse);
+      } else {
+        // Let Express handle the error for now:
+        next(error);
+      }
+    }
+  };
+
+  // The client can target this endpoint to check if there's an active session.
+  // It's only purpose is to check for a valid httpCookie containing the userID and return the matching user.
+  public checkSession = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const cookieValue = req.cookies[`${COOKIE_NAME_AUTH}`];
+      if (!cookieValue) {
+        throw new Error('Session has already expired.');
+      }
+
+      const serviceResponse = await this.authService.findUser(cookieValue);
+      res.status(serviceResponse.code).json(serviceResponse);
     } catch (error) {
       if (error instanceof Error) {
         const errorResponse: ResponseInterface = {

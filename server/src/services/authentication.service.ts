@@ -56,6 +56,40 @@ export default class AuthenticationService {
     }
   }
 
+  public async findUser(userID: string): Promise<ResponseInterface> {
+    try {
+      if (!userID) {
+        throw new Error('No userID provided. Can not continue with finding user.');
+      }
+      const user = await UserModel.findById(userID);
+      const response: ResponseInterface = {
+        data: user,
+        message: '',
+        error: false,
+        code: 200,
+      };
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        const response: ResponseInterface = {
+          data: null,
+          message: error.message,
+          error: true,
+          code: 400,
+        };
+        return response;
+      }
+
+      const response: ResponseInterface = {
+        data: null,
+        message: 'Error occured while attempting to find user.',
+        error: true,
+        code: 400,
+      };
+      return response;
+    }
+  }
+
   private isHashedPasswordMatching(password: string, hashedPassword: string, salt: string) {
     return new Promise((resolve, reject) => {
       scrypt(password, salt, 32, async (err, derivedKey) => {

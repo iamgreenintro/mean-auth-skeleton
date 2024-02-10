@@ -13,6 +13,7 @@ export default class AuthenticationRoute implements RouterInterface {
 
   private initRoutes() {
     this.router.post(this.path, this.controller.login);
+    this.router.get(this.path + '/session', this.controller.checkSession);
     this.router.post(this.path + '/logout', this.controller.logout);
   }
 }
