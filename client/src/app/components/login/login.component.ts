@@ -24,7 +24,7 @@ export class LoginComponent {
   public login = async (): Promise<void> => {
     const credentials = { username: this.username, password: this.password };
     const response = await this.authenticationService.attemptLogin(credentials);
-    console.log(response);
+    // console.log(response);
 
     // Authentication failed:
     if (response.error) {
@@ -33,10 +33,10 @@ export class LoginComponent {
     }
 
     // We have a user, redirect to dasboard component:
-    // if (response.data) {
-    //   console.log(response.data);
-    //   this.router.navigate(['/dashboard']);
-    // }
+    if (response.data) {
+      console.log(response.data);
+      this.router.navigate(['/dashboard']);
+    }
   };
 
   public getSession = async (): Promise<void> => {
