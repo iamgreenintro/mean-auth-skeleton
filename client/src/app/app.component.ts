@@ -16,6 +16,7 @@ import { ResponseInterface } from './interfaces/response.interface';
 })
 export class AppComponent {
   title = 'client';
+  user: any;
 
   constructor(
     private router: Router,
@@ -38,8 +39,11 @@ export class AppComponent {
       this.router.navigate(['/login']);
       return false;
     }
+
+    // Set the user value so we can read it throughout the application? Maybe an observable/subject in service.
+    this.user = result.data;
     // If there is a valid session but user is attemping to reach the login page, we redirect to dashboard component.
-    if (routeTarget === '/login') {
+    if (routeTarget === '/login' || routeTarget === '/register') {
       routeTarget = '/dashboard';
     }
     this.router.navigate([routeTarget]);
