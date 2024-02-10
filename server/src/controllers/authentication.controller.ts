@@ -38,6 +38,38 @@ export default class AuthController {
     }
   };
 
+  public logout = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const cookieValue = req.cookies[`${COOKIE_NAME_AUTH}`];
+
+      if (!cookieValue) {
+        throw new Error('Session has already expired.');
+      }
+
+      // Destroy cookie:
+      res.cookie(`${COOKIE_NAME_AUTH}`, cookieValue, {
+        secure: true,
+        httpOnly: true,
+        expires: new Date(0),
+      });
+
+      res.status(200).json(null);
+    } catch (error) {
+      if (error instanceof Error) {
+        const errorResponse: ResponseInterface = {
+          data: null,
+          error: true,
+          message: error.message,
+          code: 400,
+        };
+        res.status(errorResponse.code).json(errorResponse);
+      } else {
+        // Let Express handle the error for now:
+        next(error);
+      }
+    }
+  };
+
   // HttpOnly cookie will be set to protect the api routes when the cookie has expired or does not exist.
   // This is strictly server side protection.
   private setHttpCookie(res: Response, value: string): void {
