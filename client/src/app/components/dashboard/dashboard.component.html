@@ -1,1 +1,49 @@
-<p>dashboard works!</p>
+<mat-card>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h1 class="text-center">DASHBOARD</h1>
+        <h2 class="text-center">This is an active session!</h2>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card>
+  <div class="container">
+    <div class="row">
+      <div class="col-4 text-center">
+        Navigate to '/login'. This will fail if you have an active session
+        (which is the case if you're seeing the dashboard). It will simply
+        redirect you to '/dashboard'.
+        <button mat-flat-button color="primary" [routerLink]="['/login']">
+          GO TO /LOGIN
+        </button>
+      </div>
+      <div class="col-4 text-center">
+        This works during active sessions. Once you logout however, this button
+        will result in failed requests. And if you try to navigate elsewhere,
+        you'll be redirected to '/login'.
+        <button mat-flat-button color="accent" (click)="getUsers()">
+          GET USERS
+        </button>
+      </div>
+      <div class="col-4 text-center">
+        Once you logout you end your session and destroy the httpCookie via a
+        request to the server. After the session has been terminated, the API
+        endpoints become unauthorized and navigating will redirect to '/login'.
+        <button mat-flat-button color="warn" (click)="logout()">LOGOUT</button>
+      </div>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <pre>{{ users | json }}</pre>
+      </div>
+    </div>
+  </div>
+</mat-card>

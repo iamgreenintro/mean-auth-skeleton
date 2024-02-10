@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { ResponseInterface } from '../interfaces/response.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { ResponseInterface } from '../interfaces/response.interface';
 export class AuthenticationService {
   private readonly route: string = '/authentication';
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   public async attemptLogin(payload: {
     username: string;
@@ -20,6 +21,9 @@ export class AuthenticationService {
 
   public async checkSession(): Promise<ResponseInterface> {
     const response = await this.apiService.get(this.route + '/session');
+    if (!response) {
+      this.router.navigate(['/login']);
+    }
     return response;
   }
 

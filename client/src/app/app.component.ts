@@ -25,7 +25,6 @@ export class AppComponent {
     // Listen for route changes to validate the session if there is one.
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        console.log(event);
         this.validateSession(event.url);
         this.rootClass = this.setRootClass(event.url);
       }
@@ -37,6 +36,10 @@ export class AppComponent {
   ): Promise<ResponseInterface | boolean> => {
     const result = await this.authenticationService.checkSession();
     if (result.error) {
+      if (routeTarget === '/register') {
+        this.router.navigate(['/register']);
+        return false;
+      }
       this.router.navigate(['/login']);
       return false;
     }
