@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ResponseInterface } from '../interfaces/response.interface';
-
+import { environment } from '../../config/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly BASE: string = 'http://localhost:3001'; // url to target our server
+  private readonly BASE: string = `${environment.apiUrl}`; // url to target our server
   private readonly ROOT_URL: string;
 
   constructor(private http: HttpClient) {
