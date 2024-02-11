@@ -1,10 +1,12 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { AuthenticationService } from './services/authentication.service';
 import { ResponseInterface } from './interfaces/response.interface';
+import { Renderer2 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -15,18 +17,23 @@ import { ResponseInterface } from './interfaces/response.interface';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  @HostBinding('class.login-register') rootClass: boolean = false;
   title = 'client';
   user: any;
+
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private renderer: Renderer2
   ) {
     // Listen for route changes to validate the session if there is one.
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
+        this.renderer.addClass(
+          this.document.querySelector('app-root'),
+          'login-register'
+        );
         this.validateSession(event.url);
-        this.rootClass = this.setRootClass(event.url);
       }
     });
   }
@@ -53,11 +60,4 @@ export class AppComponent {
     this.router.navigate([routeTarget]);
     return result;
   };
-
-  private setRootClass(routeTarget: string): boolean {
-    if (routeTarget === '/login' || routeTarget === '/register') {
-      return true;
-    }
-    return false;
-  }
 }
