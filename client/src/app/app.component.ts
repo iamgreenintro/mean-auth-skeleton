@@ -22,7 +22,6 @@ export class AppComponent {
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
-    console.log('test');
     // Listen for route changes to validate the session if there is one.
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
