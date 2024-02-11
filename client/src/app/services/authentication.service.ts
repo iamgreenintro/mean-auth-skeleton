@@ -29,6 +29,10 @@ export class AuthenticationService {
 
   public async logout(): Promise<ResponseInterface> {
     const response = await this.apiService.post(this.route + '/logout', {});
+    if (response === null) {
+      // logout success
+      this.router.navigate(['/login']);
+    }
     return response;
   }
 }
