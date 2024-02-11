@@ -7,7 +7,7 @@
     "predev": "rimraf dist && npx tsc",
     "dev": "cross-env NODE_ENV=development concurrently \"tsc -w\" \"nodemon dist/index.js\"",
     "preprod": "rimraf dist && npx tsc",
-    "prod": "cross-env NODE_ENV=production nodemon dist/index.js",
+    "prod": "cross-env NODE_ENV=production node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
