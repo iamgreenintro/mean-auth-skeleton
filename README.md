@@ -3,7 +3,6 @@
 ## Demo:
 
 https://qwalo.com/
-https://express-server-mjje.onrender.com/api
 
 ## Description:
 
