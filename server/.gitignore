@@ -24,3 +24,6 @@
 # System files
 .DS_Store
 Thumbs.db
+
+# Production environment variables file:
+.env.production.local

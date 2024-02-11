@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://express-server-mjje.onrender.com",
+    "secure": false
+  }
+}
