@@ -7,7 +7,7 @@ import { ResponseInterface } from '../interfaces/response.interface';
   providedIn: 'root',
 })
 export class ApiService {
-  private readonly BASE: string = 'http://localhost:3001'; // url to target our server
+  private readonly BASE: string = 'https://express-server-mjje.onrender.com'; // url to target our server
   private readonly ROOT_URL: string;
 
   constructor(private http: HttpClient) {

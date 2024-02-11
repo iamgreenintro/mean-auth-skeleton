@@ -56,7 +56,11 @@ export class App {
 
   private async connectMongoDB() {
     try {
-      await connect(`${DB_CONNECTION_STRING}/${DB_CONNECTION_NAME}`);
+      if (this.env === 'development') {
+        await connect(`${DB_CONNECTION_STRING}/${DB_CONNECTION_NAME}`);
+      } else {
+        await connect(`${DB_CONNECTION_STRING}`);
+      }
     } catch (error) {
       console.log(error);
     }
