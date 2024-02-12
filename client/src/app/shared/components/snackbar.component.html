@@ -1,0 +1,17 @@
+<div class="snackbar-container" [ngClass]="data.type">
+  <span class="snackbar-type" matSnackBarLabel>
+    {{ data.type | titlecase }}
+  </span>
+  <span matSnackBarLabel> {{ data.message }} </span>
+  <span matSnackBarActions>
+    <button
+      mat-flat-button
+      color="warn"
+      [color]="data.type === 'error' ? 'warn' : 'primary'"
+      matSnackBarAction
+      (click)="snackBarRef.dismissWithAction()"
+    >
+      Dismiss
+    </button>
+  </span>
+</div>

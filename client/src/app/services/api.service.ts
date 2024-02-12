@@ -68,7 +68,13 @@ export class ApiService {
           resolve(res as ResponseInterface);
         },
         error: (err) => {
-          // Resolve if error:
+          // Resolve if error (and transform into ResponseInterface instead of HttpErrorResponse):
+          if (err.error) {
+            if (err.error.message) {
+              const newError = err.error;
+              resolve(newError);
+            }
+          }
           resolve(err);
         },
         complete: () => {

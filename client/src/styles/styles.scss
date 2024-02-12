@@ -68,3 +68,7 @@ mat-card.mat-mdc-card {
     margin: 20px 0 20px 0;
   }
 }
+
+mat-snack-bar-container .mdc-snackbar__surface {
+  padding-right: 0;
+}

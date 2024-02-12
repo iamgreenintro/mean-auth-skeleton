@@ -24,12 +24,10 @@ export class LoginComponent {
   public login = async (): Promise<void> => {
     const credentials = { username: this.username, password: this.password };
     const response = await this.authenticationService.attemptLogin(credentials);
-    // console.log(response);
 
     // Authentication failed:
     if (response.error) {
-      console.error(response.message);
-      return;
+      console.log(response);
     }
 
     // We have a user, redirect to dasboard component:
@@ -37,15 +35,5 @@ export class LoginComponent {
       console.log(response.data);
       this.router.navigate(['/dashboard']);
     }
-  };
-
-  public getSession = async (): Promise<void> => {
-    const response = await this.authenticationService.checkSession();
-    console.log(response);
-  };
-
-  public logout = async (): Promise<void> => {
-    const response = await this.authenticationService.logout();
-    console.log(response);
   };
 }
