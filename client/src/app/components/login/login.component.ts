@@ -27,12 +27,12 @@ export class LoginComponent {
 
     // Authentication failed:
     if (response.error) {
-      console.log(response);
+      // console.log(response);
     }
 
     // We have a user, redirect to dasboard component:
     if (response.data) {
-      console.log(response.data);
+      // console.log(response.data);
       this.router.navigate(['/dashboard']);
     }
   };

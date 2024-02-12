@@ -25,6 +25,6 @@ export class SnackbarComponent {
   data = inject(MAT_SNACK_BAR_DATA);
 
   constructor() {
-    console.log(this.data);
+    // console.log(this.data);
   }
 }

@@ -21,7 +21,7 @@ export class RegisterComponent {
 
   public register = async (): Promise<void> => {
     const credentials = { username: this.username, password: this.password };
-    console.log(credentials);
+    // console.log(credentials);
 
     const response = await this.userService.createUser(credentials);
     if (!response.error) {
