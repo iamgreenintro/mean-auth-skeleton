@@ -15,7 +15,6 @@ export class LoginComponent {
   public username: string = '';
   public password: string = '';
   public isPasswordHidden: boolean = true;
-  durationInSeconds = 5;
 
   constructor(
     private router: Router,

@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { ResponseInterface } from '../interfaces/response.interface';
 import { Router } from '@angular/router';
-// import { SnackbarComponent } from '../shared/components/snackbar.component';
-// import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarService } from './snackbar.service';
 
 @Injectable({
