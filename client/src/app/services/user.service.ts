@@ -24,6 +24,10 @@ export class UserService {
     );
     if (response.error) {
       this.snackbarService.displayError(response.message);
+    } else {
+      this.snackbarService.displaySuccess(
+        `Successfully created a user with username: ${response.data['username']}`
+      );
     }
     return response;
   }
@@ -32,6 +36,10 @@ export class UserService {
     const response = await this.apiService.get(this.route);
     if (response.error) {
       this.snackbarService.displayError(response.message);
+    } else {
+      this.snackbarService.displaySuccess(
+        `Successfully retrieved ${response.data?.length} users.`
+      );
     }
     return response;
   }
