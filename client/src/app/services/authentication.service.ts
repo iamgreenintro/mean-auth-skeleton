@@ -26,6 +26,10 @@ export class AuthenticationService {
     );
     if (response.error) {
       this.snackbarService.displayError(response.message);
+    } else {
+      this.snackbarService.displaySuccess(
+        `Logged in as ${response.data['username']}`
+      );
     }
     return response;
   }
