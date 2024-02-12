@@ -3,12 +3,14 @@ import { ApiService } from './api.service';
 import { ResponseInterface } from '../interfaces/response.interface';
 import { Router } from '@angular/router';
 import { SnackbarService } from './snackbar.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   private readonly route: string = '/authentication';
+  public user: BehaviorSubject<any | null> = new BehaviorSubject(null);
 
   constructor(
     private apiService: ApiService,
@@ -26,10 +28,12 @@ export class AuthenticationService {
     );
     if (response.error) {
       this.snackbarService.displayError(response.message);
+      this.user.next(null);
     } else {
       this.snackbarService.displaySuccess(
         `Logged in as ${response.data['username']}`
       );
+      this.user.next(response.data);
     }
     return response;
   }
@@ -39,6 +43,9 @@ export class AuthenticationService {
     if (!response) {
       this.router.navigate(['/login']);
       this.snackbarService.displayError('Session expired.');
+      this.user.next(null);
+    } else {
+      this.user.next(response.data);
     }
     return response;
   }
@@ -49,6 +56,7 @@ export class AuthenticationService {
       // logout success
       this.router.navigate(['/login']);
       this.snackbarService.displaySuccess('You have been logged out.');
+      this.user.next(null);
     }
     return response;
   }

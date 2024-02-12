@@ -51,8 +51,6 @@ export class AppComponent {
       return false;
     }
 
-    // Set the user value so we can read it throughout the application? Maybe an observable/subject in service.
-    this.user = result.data;
     // If there is a valid session but user is attemping to reach the login page, we redirect to dashboard component.
     if (routeTarget === '/login' || routeTarget === '/register') {
       routeTarget = '/dashboard';
