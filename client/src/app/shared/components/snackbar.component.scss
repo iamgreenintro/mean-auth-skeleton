@@ -1,0 +1,28 @@
+.snackbar-container {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 15px 10px 15px;
+
+  &.error {
+    background-color: rgb(165, 52, 52);
+    color: #fff;
+  }
+
+  &.success {
+    background-color: #02835c;
+    color: #fff;
+  }
+
+  .snackbar-type {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  .mat-mdc-snack-bar-actions,
+  .mat-mdc-snack-bar-label {
+    padding: 5px 0 5px 0;
+    button.mat-mdc-snack-bar-action {
+      color: #fff;
+    }
+  }
+}

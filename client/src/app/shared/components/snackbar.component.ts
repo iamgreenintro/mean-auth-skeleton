@@ -1,39 +1,30 @@
 import { Component, inject } from '@angular/core';
+import { SnackbarModules } from './snackbar.module';
 import {
-  MatSnackBar,
+  MAT_SNACK_BAR_DATA,
   MatSnackBarAction,
   MatSnackBarActions,
   MatSnackBarLabel,
   MatSnackBarRef,
 } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'snackbar',
   templateUrl: 'snackbar.component.html',
-  styles: [
-    `
-      :host {
-        display: flex;
-      }
-
-      .example-pizza-party {
-        color: hotpink;
-      }
-    `,
-  ],
+  styleUrl: './snackbar.component.scss',
   standalone: true,
   imports: [
-    MatButtonModule,
+    SnackbarModules,
     MatSnackBarLabel,
     MatSnackBarActions,
     MatSnackBarAction,
   ],
 })
-export class PizzaPartyAnnotatedComponent {
+export class SnackbarComponent {
   snackBarRef = inject(MatSnackBarRef);
+  data = inject(MAT_SNACK_BAR_DATA);
 
   constructor() {
-    console.log(this.snackBarRef);
+    console.log(this.data);
   }
 }
