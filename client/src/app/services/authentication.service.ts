@@ -13,23 +13,19 @@ export class AuthenticationService {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private snackbarService: SnackbarService // private _snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) {}
 
   public async attemptLogin(payload: {
     username: string;
     password: string;
   }): Promise<ResponseInterface> {
-    const response: ResponseInterface | any = await this.apiService.post(
+    const response: ResponseInterface = await this.apiService.post(
       this.route,
       payload
     );
     if (response.error) {
-      let msg = response.message;
-      if (response.error.message) {
-        msg = response.error.message;
-      }
-      this.snackbarService.displayError(msg);
+      this.snackbarService.displayError(response.message);
     }
     return response;
   }
