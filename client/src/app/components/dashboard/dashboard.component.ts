@@ -41,7 +41,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   };
 
   public getUsers = async (): Promise<void> => {
-    console.log(this.user);
     const response = await this.userService.getAllUsers();
     if (!response.error) {
       this.users = response.data;

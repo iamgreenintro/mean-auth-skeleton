@@ -52,11 +52,14 @@ export class AuthenticationService {
 
   public async logout(): Promise<ResponseInterface> {
     const response = await this.apiService.post(this.route + '/logout', {});
+    this.router.navigate(['/login']);
+    this.user.next(null);
+    if (response.error) {
+      this.snackbarService.displayError(response.message);
+    }
     if (response === null) {
       // logout success
-      this.router.navigate(['/login']);
       this.snackbarService.displaySuccess('You have been logged out.');
-      this.user.next(null);
     }
     return response;
   }
