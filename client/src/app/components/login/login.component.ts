@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModules } from './login.module';
 import { AuthenticationService } from '../../services/authentication.service';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'login',
@@ -11,15 +12,25 @@ import { AuthenticationService } from '../../services/authentication.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   public username: string = '';
   public password: string = '';
   public isPasswordHidden: boolean = true;
 
   constructor(
+    @Inject(DOCUMENT) private document: Document,
     private router: Router,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private renderer: Renderer2
   ) {}
+
+  ngOnInit(): void {
+    // Set class to apply specific styling (this is to be done in login and register component).
+    this.renderer.addClass(
+      this.document.querySelector('app-root'),
+      'login-register'
+    );
+  }
 
   public login = async (): Promise<void> => {
     const credentials = { username: this.username, password: this.password };

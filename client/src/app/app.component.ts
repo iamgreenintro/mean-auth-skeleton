@@ -29,7 +29,8 @@ export class AppComponent {
     // Listen for route changes to validate the session if there is one.
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
-        this.renderer.addClass(
+        // Remove class that we set in login and register component.
+        this.renderer.removeClass(
           this.document.querySelector('app-root'),
           'login-register'
         );
