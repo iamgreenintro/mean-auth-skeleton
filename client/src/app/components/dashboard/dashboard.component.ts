@@ -13,8 +13,10 @@ import { UserService } from '../../services/user.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   public users: any | null = [];
-  public user: any | null = null;
+  public authenticatedUser: any | null = null;
   public subscription: any | null = null;
+  public displayedColumns: Array<string> = ['#', 'username', 'id', 'actions'];
+
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService
@@ -25,7 +27,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.subscription = this.authenticationService.user.subscribe(
       (response) => {
         // Update the local user variable whenever there's a new emission
-        this.user = response;
+        this.authenticatedUser = response;
+        this.getUsers();
       }
     );
   }
@@ -37,7 +40,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public logout = async (): Promise<void> => {
     const response = await this.authenticationService.logout();
-    return;
   };
 
   public getUsers = async (): Promise<void> => {
