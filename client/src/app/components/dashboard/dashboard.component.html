@@ -2,8 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h1 class="text-center">DASHBOARD</h1>
-        <h2 class="text-center">This is an active session!</h2>
+        <h1 class="text-center">Hello, {{ authenticatedUser?.username }}!</h1>
+        <h2 class="text-center">{{ authenticatedUser?.id }}</h2>
       </div>
     </div>
   </div>
@@ -38,12 +38,39 @@
   </div>
 </mat-card>
 
-<mat-card>
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <pre>{{ users | json }}</pre>
-      </div>
-    </div>
-  </div>
-</mat-card>
+<table mat-table [dataSource]="users" class="mat-elevation-z8 demo-table">
+  <!-- Position Column -->
+  <ng-container matColumnDef="#">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let user; index as i">{{ i + 1 }}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="username">
+    <th mat-header-cell *matHeaderCellDef>Username</th>
+    <td mat-cell *matCellDef="let user">{{ user.username }}</td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>User ID</th>
+    <td mat-cell *matCellDef="let user">{{ user.id }}</td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let user">
+      <button
+        *ngIf="user?.id == authenticatedUser?.id"
+        mat-flat-button
+        color="primary"
+      >
+        Button
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
