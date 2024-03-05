@@ -2,6 +2,10 @@
 
 ## Demo:
 
+Please note that the demo uses a free render web service.
+It can take a minute or more for the web service to become active after idling (due to free tier).
+That might lead to the first request timing out; please wait a moment and retry.
+
 https://qwalo.com/
 
 ## Description:
