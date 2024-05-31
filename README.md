@@ -1,13 +1,5 @@
 # MEAN Auth Skeleton
 
-## Demo:
-
-Please note that the demo uses a free render web service.
-It can take a minute or more for the web service to become active after idling (due to free tier).
-That might lead to the first request timing out; please wait a moment and retry.
-
-https://qwalo.com/
-
 ## Description:
 
 The MEAN Auth Sekeleton is a starter project for full-stack web applications. The project has a client and a server side. It comes with authentication and (server-side) session management. I chose to build it using the MEAN stack (MongoDB, Express, Angular & Node) because they are widely used languages and have been around for a very long time (relative to the industry).
